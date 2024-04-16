@@ -1,0 +1,53 @@
+﻿@page "/test"
+@rendermode InteractiveServer
+@using Web_Blazor.Components.Pages.ObjectiveComponents
+
+<PageTitle>Список задач</PageTitle>
+
+<h1>Задачи (ObjectiveComponent)</h1>
+
+<OblectiveList Objectives="objectives">
+    <EmptyObjectives>
+        <span>Задач нет</span>
+    </EmptyObjectives>
+</OblectiveList>
+
+@code{
+    private List<ObjectiveViewModel> objectives;
+    string statusDone = "Сделано";
+    string statusWork = "Не сделано";
+
+
+    protected override Task OnInitializedAsync()
+    {
+        
+        objectives = new List<ObjectiveViewModel>
+        {
+            new ObjectiveViewModel
+            {
+            Name = "Открыть окно",
+            Date = DateTime.Now,
+            Status = true
+            },
+            new ObjectiveViewModel
+            {
+            Name = "Поесть",
+            Date = new DateTime(2024,04,09,22,00,00),
+            Status = false
+            },
+            new ObjectiveViewModel
+            {
+            Name = "Поспать",
+            Date = new DateTime(2024,04,10,9,0,0),
+            Status = false
+            },
+
+        };
+        return base.OnInitializedAsync();
+    }
+}
+
+
+
+
+

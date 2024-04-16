@@ -1,0 +1,43 @@
+﻿@page "/addObjective"
+@rendermode InteractiveServer
+@inject IObjectiveService objectiveService
+@using Microsoft.AspNetCore.Components.Web
+@inject NavigationManager Navigation
+@inject IJSRuntime jsRuntime
+
+<h3>Добавление задачи</h3>
+
+<input placeholder="Название" @bind="name"/><br />
+<InputDate @bind-Value="date"/><br />
+<button class="btn btn-primary" @onclick="AddObjective">Добавить задачу</button>
+
+<br />
+
+@code {
+    private string name;
+    private Boolean confirmResult;
+    private DateTime date;
+    private Boolean status = false;
+
+    async void AddObjective()
+    {
+        if (name != null)
+        {
+            var objective = new ObjectiveViewModel
+                {
+                    Name = name,
+                    Date = date,
+                    Status = status
+                };
+            var confirmResult = await jsRuntime.InvokeAsync<Boolean>("confirm","Подтвердите ввод");
+            if (confirmResult) {
+                objectiveService.AddObjective(objective);
+                Navigation.NavigateTo("tasks");
+            }
+        }
+        else
+        {
+            jsRuntime.InvokeVoidAsync("alert", "Введите задачу");
+        }
+    }
+}

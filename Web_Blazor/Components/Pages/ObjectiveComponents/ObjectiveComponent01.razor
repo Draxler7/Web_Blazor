@@ -1,0 +1,35 @@
+﻿@rendermode InteractiveServer
+
+<p>
+    <b>Имя задачи: </b>@CurrentObjective.Name <br />
+    <b>Дата: </b>@CurrentObjective.Date <br />
+    <input type="checkbox" style="pointer-events: none;" @bind="@CurrentObjective.Status" />
+    <b>Статус: </b>@if (@CurrentObjective.Status)
+    {
+        @statusDone
+    }
+    else
+    {
+        @statusWork
+    }<br />
+
+    <button class="btn btn-primary" @onclick="@(() => {CurrentObjective.Status=!CurrentObjective.Status;})" >Изменить статус</button>
+    <button class="btn btn-primary" @onclick="@(() => DeleteCurrentObjective.InvokeAsync(CurrentObjective))" >Удалить </button>
+        
+</p>
+
+@code {
+
+    string statusDone = "Сделано";
+    string statusWork = "Не сделано";
+
+    Boolean statusEdit;
+
+    [Parameter]
+    public ObjectiveViewModel CurrentObjective { get; set; }
+
+    [Parameter]
+    public EventCallback<ObjectiveViewModel> DeleteCurrentObjective{ get; set; }
+
+
+}

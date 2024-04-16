@@ -1,0 +1,63 @@
+﻿@page "/counter"
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Components.Web
+@inject NavigationManager Navigation
+
+<h1>Счетчик</h1>
+
+<p role="status">Текущий счет: @currentCount</p>
+
+На сколько изменять число:
+<input @onchange="InputChanged" />
+<p>@message</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">+</button>
+
+<button class="btn btn-primary" @onclick="DicrementCount">-</button>
+
+<div>
+<input @bind="text" />
+<button @onclick="() => text = string.Empty">Clear</button>
+<p>@text</p>
+</div>
+
+@code {
+    private int currentCount = 0;
+    string message = "";
+    private int changeCount = 0;
+
+    void InputChanged(ChangeEventArgs e) 
+    { 
+        message = (string)e.Value; 
+        changeCount = int.Parse(message);
+    }
+
+    [Parameter]
+    public int IncrementAmount { get; set; } = 1;
+
+    private void IncrementCount()
+    {
+        currentCount += changeCount;
+    }
+
+    private void DicrementCount() 
+    {
+        currentCount -= changeCount;
+    }
+
+    string text = "";
+}
+
+@if (currentCount >= 50)
+{
+    <p>You win!</p>
+}
+
+<button class="btn btn-primary" @onclick="NavigateTo">Переход</button>
+
+@code{
+    void NavigateTo(){
+        Navigation.NavigateTo("test");
+    }
+}
+

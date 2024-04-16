@@ -1,0 +1,54 @@
+﻿@page "/tasks"
+@rendermode InteractiveServer
+@using Web_Blazor.Components.Pages.ObjectiveComponents
+@using Microsoft.AspNetCore.Components.Web
+@inject NavigationManager Navigation
+@inject IObjectiveService objectiveService
+@using Web_Blazor
+
+<PageTitle>Задачи</PageTitle>
+
+<h1>Задачи (Service)</h1>
+
+<button class="btn btn-primary" @onclick="MoveAddObjective">Добавить задачу</button>
+
+
+<br />
+
+@if (objectiveService.GetObjectives().Count == 0)
+{
+    <b>Задачи отсутствуют</b>
+}
+else
+{
+    @foreach (var objective in objectiveService.GetObjectives())
+    {
+        <b >@objective.Name</b>
+        <p>
+            @objective.Date
+        <br />
+            <input type="checkbox" style="pointer-events: none;" @bind="@objective.Status" />
+            @if (@objective.Status)
+            {
+                @statusDone
+            }
+            else
+            {
+                @statusWork
+            }
+        </p>
+        <button class="btn btn-primary" @onclick="@(() => {objective.Status=true;})">Выполнить задачу</button>
+        <button class="btn btn-primary" @onclick="@(()=> objectiveService.RemoveObjective(objective.Name,objective.Date))">Удалить задачу</button>
+        <br />
+    }
+}
+
+<br />
+
+@code{
+    string statusDone = "Сделано";
+    string statusWork = "Не сделано";
+    string name;
+
+    void MoveAddObjective() => Navigation.NavigateTo("addObjective");
+}

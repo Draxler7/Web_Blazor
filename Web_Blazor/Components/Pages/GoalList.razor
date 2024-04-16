@@ -1,0 +1,40 @@
+﻿@page "/goals"
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Components.Web
+@inject NavigationManager Navigation
+@using Web_Blazor.Components.Data
+@inject GoalService goalService
+
+<h1>Список задач</h1>
+
+<button class="btn btn-primary" @onclick=@(() => Navigation.NavigateTo("add-goal"))>Добавить задачу</button>
+
+<table class="table table-striped">
+    @if (goalList == null || goalList.Count==0)
+    {
+        <p>Задачи отсутсвуют</p>
+    }
+    else @foreach(var goal in goalList)
+    {
+    <thread>
+    <tr>
+        <th>Название</th>
+        <th>Время</th>
+        <th>Статус</th>
+    </tr>
+    </thread>
+        <tr>
+            <GoalDetail Goal="goal"></GoalDetail>
+        </tr>
+    }
+</table>
+
+@code {
+    private List<Goal> goalList;
+
+    protected override void OnInitialized()
+    {
+        goalList = goalService.GetGoals();
+        base.OnInitialized();
+     }
+}

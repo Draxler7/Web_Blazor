@@ -1,0 +1,15 @@
+﻿@using Web_Blazor.Components.Data
+<tr>
+    @Goal.Name
+</tr>
+<tr>
+    @Goal.Date
+</tr>
+<tr>
+    @Goal.Status
+</tr>
+
+@code {
+    [Parameter]
+    public Goal Goal{ get; set; }
+}

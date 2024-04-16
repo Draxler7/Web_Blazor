@@ -1,0 +1,16 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Components.Web
+@inject NavigationManager Navigation
+
+<PageTitle>Домашняя страница</PageTitle>
+
+<h1>Web-приложение для оформление задач</h1>
+
+<button class="btn btn-primary" @onclick=@(() => Navigation.NavigateTo("tasks"))>Перейти к задачам с использованием Service</button><br />
+<button class="btn btn-primary" @onclick=@(() => Navigation.NavigateTo("test"))>Перейти к задачам с использованием Component</button><br />
+<button class="btn btn-primary" @onclick=@(() => Navigation.NavigateTo("goals"))>Перейти к задачам с использованием MongoDB</button><br />
+
+@code {
+
+}

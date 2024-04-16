@@ -1,0 +1,25 @@
+﻿@if ((Objectives is null)||(Objectives.Count==0))
+{
+    @EmptyObjectives
+}
+else {
+@foreach (var objective in Objectives)
+{
+
+    <ObjectiveComponent01 CurrentObjective="objective" DeleteCurrentObjective="DeleteObjective"></ObjectiveComponent01>
+}
+}
+
+@code {
+
+    [Parameter]
+    public RenderFragment EmptyObjectives{ get; set; }
+
+    [Parameter]
+    public List<ObjectiveViewModel> Objectives{ get; set; }
+
+    private void DeleteObjective(ObjectiveViewModel objective)
+    {
+        Objectives.Remove(objective);
+    }
+}
